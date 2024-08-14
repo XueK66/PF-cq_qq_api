@@ -49,10 +49,10 @@ class QQWebSocketConnector:
         QQInfo(message, self.server, self.bot)
 
     def on_error(self, ws, error):
-        self.server.logger.error(f"WebSocket error: {error}")
+        self.server.logger.warning(f"WebSocket error: {error}")
 
     def on_close(self, ws, close_status_code, close_msg):
-        self.server.logger.info(f"WebSocket closed with code: {close_status_code}, message: {close_msg}")
+        self.server.logger.info(f"~~ WebSocket closed ~~")
         self.close()
 
     def send_message(self, message):
@@ -64,8 +64,11 @@ class QQWebSocketConnector:
             self.server.logger.warning(f"Websocket disconnect!")
 
     def close(self):
-        if self.ws:
-            self.ws.close()
-        if self.listener_thread:
-            self.listener_thread.join()
-        self.server.logger.info("WebSocket connection closed and threads terminated.")
+        try:
+            if self.ws:
+                self.ws.close()
+            if self.listener_thread:
+                self.listener_thread.join()
+            self.server.logger.info("WebSocket connection closed and threads terminated.")
+        except Exception as e:
+            self.server.logger.warning(f"Got error when closing websocket: {e}")

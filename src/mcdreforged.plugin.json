@@ -1,7 +1,7 @@
 {
-	"id": "websocket_info_factory",
+	"id": "cq_qq_api",
 	"version": "1.0.0",
-	"name": "websocket_info_factory",
+	"name": "cq_qq_api",
 	"description": {
 		"en_us": "Websocket application to process information from QQ",
 		"zh_cn": "处理QQ通信的websocket应用"
@@ -9,6 +9,6 @@
 	"author": [
 		"XueK__"
 	],
-	"link": "https://github.com/XueK66/PF-websocket_info_factory",
+	"link": "https://github.com/XueK66/PF-cq_qq_api",
 	"dependencies": {}
 }

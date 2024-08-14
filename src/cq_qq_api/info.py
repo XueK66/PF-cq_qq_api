@@ -68,12 +68,12 @@ class QQInfo:
             self.source_id = message.get("group_id")
 
         self.server.dispatch_event(
-            LiteralEvent("websocket_info_factory.on_qq_command"),
+            LiteralEvent("cq_qq_api.on_qq_command"),
             (self, self.bot)
         )
 
         self.server.dispatch_event(
-            LiteralEvent("websocket_info_factory.on_qq_message"),
+            LiteralEvent("cq_qq_api.on_qq_message"),
             (self, self.bot)
         )
 
@@ -90,7 +90,7 @@ class QQInfo:
             self.comment = message.get("comment")          # 验证信息
 
         self.server.dispatch_event(
-            LiteralEvent("websocket_info_factory.on_qq_request"),
+            LiteralEvent("cq_qq_api.on_qq_request"),
             (self, self.bot)
         )
 
@@ -174,7 +174,7 @@ class QQInfo:
             self.message_id = message.get("message_id")    # 消息ID
 
         self.server.dispatch_event(
-            LiteralEvent("websocket_info_factory.on_qq_notice"),
+            LiteralEvent("cq_qq_api.on_qq_notice"),
             (self, self.bot)
         )
         

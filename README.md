@@ -1,12 +1,12 @@
 
-# PF-websocket_info_factory
+# PF-cq_qq_api
 
-[![仓库大小](https://img.shields.io/github/repo-size/XueK66/PF-websocket_info_factory?style=flat-square&label=仓库占用)](/)
-[![最新版](https://img.shields.io/github/v/release/XueK66/PF-websocket_info_factory?style=flat-square&label=最新版)](https://github.com/XueK66/PF-websocket_info_factory/releases/latest/download/YourRepoName.mcdr)
-[![Issues](https://img.shields.io/github/issues/XueK66/PF-websocket_info_factory?style=flat-square&label=Issues)](https://github.com/XueK66/PF-websocket_info_factory/issues)
-[![已关闭issues](https://img.shields.io/github/issues-closed/XueK66/PF-websocket_info_factory?style=flat-square&label=已关闭%20Issues)](https://github.com/XueK66/PF-websocket_info_factory/issues?q=is%3Aissue+is%3Aclosed)
-[![下载量](https://img.shields.io/github/downloads/XueK66/PF-websocket_info_factory/total?style=flat-square&label=下载量)](https://github.com/XueK66/PF-websocket_info_factory/releases)
-[![最新发布下载量](https://img.shields.io/github/downloads/XueK66/PF-websocket_info_factory/latest/total?style=flat-square&label=最新版本下载量)](https://github.com/XueK66/PF-websocket_info_factory/releases/latest)
+[![仓库大小](https://img.shields.io/github/repo-size/XueK66/PF-cq_qq_api?style=flat-square&label=仓库占用)](/)
+[![最新版](https://img.shields.io/github/v/release/XueK66/PF-cq_qq_api?style=flat-square&label=最新版)](https://github.com/XueK66/PF-cq_qq_api/releases/latest/download/YourRepoName.mcdr)
+[![Issues](https://img.shields.io/github/issues/XueK66/PF-cq_qq_api?style=flat-square&label=Issues)](https://github.com/XueK66/PF-cq_qq_api/issues)
+[![已关闭issues](https://img.shields.io/github/issues-closed/XueK66/PF-cq_qq_api?style=flat-square&label=已关闭%20Issues)](https://github.com/XueK66/PF-cq_qq_api/issues?q=is%3Aissue+is%3Aclosed)
+[![下载量](https://img.shields.io/github/downloads/XueK66/PF-cq_qq_api/total?style=flat-square&label=下载量)](https://github.com/XueK66/PF-cq_qq_api/releases)
+[![最新发布下载量](https://img.shields.io/github/downloads/XueK66/PF-cq_qq_api/latest/total?style=flat-square&label=最新版本下载量)](https://github.com/XueK66/PF-cq_qq_api/releases/latest)
 
 
 > PFingan服务器MCDRQQ机器人插件
@@ -18,8 +18,8 @@
 技术支持：XueK__ [前往主页](https://github.com/XueK66)
 
 使用方式：
-* 将Release里面的websocket_info_factory.mcdr放入`/plugins`
-* 加载后，在`/config/websocket_info_factory/config.yml`中配置机器人
+* 将Release里面的cq_qq_api.mcdr放入`/plugins`
+* 加载后，在`/config/cq_qq_api/config.yml`中配置机器人
 
 ## 依赖
 #### Python
@@ -33,13 +33,13 @@
 ## 使用方式
 #### 调用机器人
 ```
-bot = server.get_plugin_instance("websocket_info_factory").get_bot()
+bot = server.get_plugin_instance("cq_qq_api").get_bot()
 ```
 
 #### 调用例子 - 发送群聊消息
 更多接口详情可查看`bot.py`或查看[Onebot_11_API_标准](https://github.com/botuniverse/onebot-11/blob/master/api/public.md)
 ```
-bot = server.get_plugin_instance("websocket_info_factory").get_bot()
+bot = server.get_plugin_instance("cq_qq_api").get_bot()
 bot.send_group_msg(group_id, message)
 ```
 
