@@ -1,0 +1,14 @@
+{
+	"id": "websocket_info_factory",
+	"version": "1.0.0",
+	"name": "websocket_info_factory",
+	"description": {
+		"en_us": "Websocket application to process information from QQ",
+		"zh_cn": "处理QQ通信的websocket应用"
+	},
+	"author": [
+		"XueK__"
+	],
+	"link": "IDK",
+	"dependencies": {}
+}
