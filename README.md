@@ -1,5 +1,14 @@
-## 公告
+
 # PF-websocket_info_factory
+
+[![仓库大小](https://img.shields.io/github/repo-size/XueK66/PF-websocket_info_factory?style=flat-square&label=仓库占用)](/)
+[![最新版](https://img.shields.io/github/v/release/XueK66/PF-websocket_info_factory?style=flat-square&label=最新版)](https://github.com/XueK66/PF-websocket_info_factory/releases/latest/download/YourRepoName.mcdr)
+[![Issues](https://img.shields.io/github/issues/XueK66/PF-websocket_info_factory?style=flat-square&label=Issues)](https://github.com/XueK66/PF-websocket_info_factory/issues)
+[![已关闭issues](https://img.shields.io/github/issues-closed/XueK66/PF-websocket_info_factory?style=flat-square&label=已关闭%20Issues)](https://github.com/XueK66/PF-websocket_info_factory/issues?q=is%3Aissue+is%3Aclosed)
+[![下载量](https://img.shields.io/github/downloads/XueK66/PF-websocket_info_factory/total?style=flat-square&label=下载量)](https://github.com/XueK66/PF-websocket_info_factory/releases)
+[![最新发布下载量](https://img.shields.io/github/downloads/XueK66/PF-websocket_info_factory/latest/total?style=flat-square&label=最新版本下载量)](https://github.com/XueK66/PF-websocket_info_factory/releases/latest)
+
+
 > PFingan服务器MCDRQQ机器人插件
 >
 > 基于CQ码的QQ连接机器人
