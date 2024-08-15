@@ -42,7 +42,7 @@ class QQInfo:
         content = re.sub(r'\[CQ:dice\]', '[掷骰子]', content)
         content = re.sub(r'\[CQ:shake\]', '[窗口抖动]', content)
         content = re.sub(r'\[CQ:poke,.*?\]', "[戳一戳]", content)
-        content = re.sub(r'\[[CQ:anonymous.*?\]', "[匿名消息]", content)
+        content = re.sub(r'\[CQ:anonymous.*?\]', "[匿名消息]", content)
         content = re.sub(r'\[CQ:share,file=.*?\]', '[链接]', content)
         content = re.sub(r'\[CQ:contact,type=qq.*?\]', "[推荐好友]", content)
         content = re.sub(r'\[CQ:contact,type=group.*?\]', "[推荐群]", content)
