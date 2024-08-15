@@ -79,14 +79,14 @@ class QQInfo:
 
     def __process_request(self, message):
         self.request_type = message.get("request_type")
+        self.user_id = message.get("user_id")              # 发送请求的 QQ 号
+        self.flag = message.get("flag")
 
         if self.request_type == "friend":                  # 加好友请求
-            self.user_id = message.get("user_id")
             self.comment = message.get("comment")          # 验证信息
         elif self.request_type == "group":                 # 加群请求
             self.sub_type = message.get("sub_type")        # add、invite
             self.group_id = message.get("group_id")         
-            self.user_id  = message.get("user_id")         # 发送请求的 QQ 号
             self.comment = message.get("comment")          # 验证信息
 
         self.server.dispatch_event(
