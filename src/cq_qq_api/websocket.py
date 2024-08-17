@@ -3,7 +3,6 @@ import threading
 import json
 from .bot import bot
 from .info import QQInfo
-from base64 import b64encode, b64decode
 
 class QQWebSocketConnector:
     def __init__(self, server, config):
@@ -16,18 +15,37 @@ class QQWebSocketConnector:
         host = self.config.get("host")
         port = self.config.get("port")
         post_path = self.config.get("post_path")
-        self.url = f"ws://{host}:{port}/{post_path}"
+        token = self.config.get("token")
+        self.headers = None
+
+        self.url = f"ws://{host}:{port}"
+
+        if post_path:
+            self.url += f"/{post_path}"
+        if token:
+            self.headers = {
+                "Authorization": f"Bearer {token}"
+            } 
 
         self.bot = bot(self.send_message)
 
     def connect(self):
         self.server.logger.info(f"Try to connect {self.url}")
-        self.ws = websocket.WebSocketApp(
-            self.url,
-            on_message=self.on_message,
-            on_error=self.on_error,
-            on_close=self.on_close
-        )
+        if self.headers:
+            self.ws = websocket.WebSocketApp(
+                self.url,
+                header=self.headers,
+                on_message=self.on_message,
+                on_error=self.on_error,
+                on_close=self.on_close
+            )
+        else:
+            self.ws = websocket.WebSocketApp(
+                self.url,
+                on_message=self.on_message,
+                on_error=self.on_error,
+                on_close=self.on_close
+            )
 
         # 创建并启动监听线程
         self.listener_thread = threading.Thread(target=self.ws.run_forever)
