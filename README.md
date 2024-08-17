@@ -54,6 +54,7 @@ bot.send_group_msg(group_id, message)
 > | host | `127.0.0.1` | 接收数据上报的地址 |
 > | port | `8080` | 对应数据上报的端口 | 
 > | post_path | "" | 对应数据上报的终点名 |
+> | token | "" | 对应数据上报的token，用于加密信息 |
 
 ```
 {
