@@ -60,7 +60,8 @@ bot.send_group_msg(group_id, message)
 {
     "host": "127.0.0.1",
     "port": 8080,
-    "post_path": ""
+    "post_path": "",
+    "token": ""
 }
 ```
 
