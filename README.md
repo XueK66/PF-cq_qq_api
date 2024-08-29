@@ -79,3 +79,8 @@ ws://host:port/post_path/
 # 有BUG或是新的IDEA
 如果需要更多联动或提交想法和问题请提交 [issues](https://github.com/LoosePrince/PF-GUGUBot/issues) 或 QQ [1377820366](http://wpa.qq.com/msgrd?v=3&uin=1377820366&site=qq&menu=yes) 提交！ <br />
 视情况添加，请勿联系他人（开发者：[雪开](https://github.com/XueK66)）
+
+# 致谢
+消息格式参考 from [go-cqhttp](https://docs.go-cqhttp.org/)
+接口参考 from [Onebot_11_API](https://github.com/botuniverse/onebot-11/blob/master/api/public.md)
+消息解析 from [qq_api/qq_api](https://github.com/AnzhiZhang/MCDReforgedPlugins/tree/6049c6a6808383b2d5fb219598a79b975905fa84/qq_api) 作者 [AnzhiZhang](https://github.com/AnzhiZhang)
