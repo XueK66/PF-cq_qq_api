@@ -11,7 +11,7 @@
 
 > PFingan服务器MCDRQQ机器人插件
 >
-> 基于CQ码的QQ连接机器人
+> 基于CQ码的**正向Websocket**QQ连接机器人
 >
 > 提供MCDR机器人插件接口，方便聊天类机器人的构建
 
@@ -55,20 +55,17 @@ bot.send_group_msg(group_id, message)
 > | port | `8080` | 对应数据上报的端口 | 
 > | post_path | "" | 对应数据上报的终点名 |
 > | token | "" | 对应数据上报的token，用于加密信息 |
-
+> | language | "zh" | 语言包[zh/en] |
 ```
 {
     "host": "127.0.0.1",
     "port": 8080,
     "post_path": "",
-    "token": ""
+    "token": "",
+    "language": "zh"
 }
 ```
 
-最终websocket url为：
-```
-ws://host:port/post_path/
-```
 #### QQ机器人配置
 **以下为必要配置！**
 > | 配置项 | 默认值 | 说明 |
@@ -79,3 +76,8 @@ ws://host:port/post_path/
 # 有BUG或是新的IDEA
 如果需要更多联动或提交想法和问题请提交 [issues](https://github.com/LoosePrince/PF-GUGUBot/issues) 或 QQ [1377820366](http://wpa.qq.com/msgrd?v=3&uin=1377820366&site=qq&menu=yes) 提交！ <br />
 视情况添加，请勿联系他人（开发者：[雪开](https://github.com/XueK66)）
+
+# 致谢
+- 消息格式参考 from [go-cqhttp](https://docs.go-cqhttp.org/)
+- 接口参考 from [Onebot_11_API](https://github.com/botuniverse/onebot-11/blob/master/api/public.md)
+- 消息解析参考 from [qq_api](https://github.com/AnzhiZhang/MCDReforgedPlugins/tree/6049c6a6808383b2d5fb219598a79b975905fa84/qq_api) 作者 [AnzhiZhang](https://github.com/AnzhiZhang)
