@@ -11,7 +11,7 @@
 
 > PFingan服务器MCDRQQ机器人插件
 >
-> 基于CQ码的QQ连接机器人
+> 基于CQ码的**正向Websocket**QQ连接机器人
 >
 > 提供MCDR机器人插件接口，方便聊天类机器人的构建
 
@@ -55,20 +55,17 @@ bot.send_group_msg(group_id, message)
 > | port | `8080` | 对应数据上报的端口 | 
 > | post_path | "" | 对应数据上报的终点名 |
 > | token | "" | 对应数据上报的token，用于加密信息 |
-
+> | language | "zh" | 语言包[zh/en] |
 ```
 {
     "host": "127.0.0.1",
     "port": 8080,
     "post_path": "",
-    "token": ""
+    "token": "",
+    "language": "zh"
 }
 ```
 
-最终websocket url为：
-```
-ws://host:port/post_path/
-```
 #### QQ机器人配置
 **以下为必要配置！**
 > | 配置项 | 默认值 | 说明 |
