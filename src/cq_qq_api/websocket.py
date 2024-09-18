@@ -1,6 +1,7 @@
-import websocket
-import threading
 import json
+import threading
+import websocket
+
 from .bot import bot
 from .constant import LANGUAGE
 from .info import QQInfo
@@ -53,7 +54,7 @@ class QQWebSocketConnector:
             )
 
         # 创建并启动监听线程
-        self.listener_thread = threading.Thread(target=self.ws.run_forever)
+        self.listener_thread = threading.Thread(target=self.ws.run_forever, kwargs={'reconnect': 5})
         self.listener_thread.start()
 
         self.server.logger.info(LANGUAGE[self.language]["start_connect"])
