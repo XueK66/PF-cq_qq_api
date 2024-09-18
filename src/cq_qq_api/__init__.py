@@ -16,7 +16,7 @@ def on_unload(server: PluginServerInterface):
     global connector
     if connector:
         connector.close()
-        server.logger.info("~~ QQWebSocketConnector is closed ~~")
+        server.logger.info(LANGUAGE[connector.language]["close_success"])
 
 def get_bot():
     if connector:

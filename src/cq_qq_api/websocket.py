@@ -2,6 +2,7 @@ import websocket
 import threading
 import json
 from .bot import bot
+from .constant import LANGUAGE
 from .info import QQInfo
 
 class QQWebSocketConnector:
@@ -10,6 +11,10 @@ class QQWebSocketConnector:
         self.listener_thread = None
 
         self.config = config
+        self.language = config.get("language", "zh")
+        if self.language not in LANGUAGE:
+            server.logger.warning(LANGUAGE["en"]["language_not_found"].format(self.language))
+            self.language = "en"
         self.server = server
 
         host = self.config.get("host")
@@ -30,7 +35,7 @@ class QQWebSocketConnector:
         self.bot = bot(self.send_message)
 
     def connect(self):
-        self.server.logger.info(f"Try to connect {self.url}")
+        self.server.logger.info(LANGUAGE[self.language]["try_connect"].format(self.url))
         if self.headers:
             self.ws = websocket.WebSocketApp(
                 self.url,
@@ -51,12 +56,12 @@ class QQWebSocketConnector:
         self.listener_thread = threading.Thread(target=self.ws.run_forever)
         self.listener_thread.start()
 
-        self.server.logger.info(f"~~ Start connection to {self.url} ~~")
+        self.server.logger.info(LANGUAGE[self.language]["start_connect"])
 
 
     def on_message(self, ws, message):
         # 处理接收到的消息
-        self.server.logger.debug(f"Received message: {message}")
+        self.server.logger.debug(LANGUAGE[self.language]["received_message"].format(message))
 
         message = json.loads(message)
 
@@ -67,19 +72,19 @@ class QQWebSocketConnector:
         QQInfo(message, self.server, self.bot)
 
     def on_error(self, ws, error):
-        self.server.logger.warning(f"WebSocket error: {error}")
+        self.server.logger.error(LANGUAGE[self.language]["error_connect"].format(error))
 
     def on_close(self, ws, close_status_code, close_msg):
-        self.server.logger.info(f"~~ WebSocket closed ~~")
+        self.server.logger.debug(LANGUAGE[self.language]["close_connect"])
         self.close()
 
     def send_message(self, message):
         if self.ws and self.ws.sock and self.ws.sock.connected:
             self.ws.send(json.dumps(message))
 
-            self.server.logger.debug(f"Send message to QQ\n{message}")
+            self.server.logger.debug(LANGUAGE[self.language]["send_message"].format(message))
         else:
-            self.server.logger.warning(f"Websocket disconnect!")
+            self.server.logger.warning(LANGUAGE[self.language]["retry_connect"])
 
     def close(self):
         try:
@@ -87,6 +92,6 @@ class QQWebSocketConnector:
                 self.ws.close()
             if self.listener_thread:
                 self.listener_thread.join()
-            self.server.logger.info("WebSocket connection closed and threads terminated.")
+            self.server.logger.info(LANGUAGE[self.language]["close_info"])
         except Exception as e:
-            self.server.logger.warning(f"Got error when closing websocket: {e}")
+            self.server.logger.warning(LANGUAGE[self.language]["error_close"].format(e))
