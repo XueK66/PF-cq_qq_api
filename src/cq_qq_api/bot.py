@@ -13,8 +13,10 @@ class bot:
     #     "echo": "'回声', 如果指定了 echo 字段, 那么响应包也会同时包含一个 echo 字段, 它们会有相同的值"
     # }
 
-    def __init__(self, send_message) -> None:
+    def __init__(self, send_message, max_wait_time:int=10) -> None:
         self.send_message = send_message
+        self.max_wait_time = max_wait_time
+
         self.function_return = {}
 
     @staticmethod
@@ -26,15 +28,17 @@ class bot:
         }
     
     def wait_and_return_function_result(self, function_return_id):
-        try_count = 0
+        start_time = time.time()
         while True:
-            try_count += 1
             if function_return_id in self.function_return:
-                return self.function_return[function_return_id]
+                result = self.function_return[function_return_id]
+                del self.function_return[function_return_id]
+                return result
                 
             time.sleep(0.2)
 
-            if try_count >= 20:
+            # exceed max_wait_time -> return None
+            if time.time() - start_time >= self.max_wait_time:
                 break
 #=====================================================================#
 # Account
