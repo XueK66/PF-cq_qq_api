@@ -3,7 +3,8 @@ DEFAULT_CONFIG = {
     "port": 8080,
     "post_path": "",
     "token": "",
-    "language": "zh"
+    "language": "zh",
+    "max_wait_time": 10
 }
 
 LANGUAGE = {

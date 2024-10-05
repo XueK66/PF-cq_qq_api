@@ -8,32 +8,33 @@ from .info import QQInfo
 
 class QQWebSocketConnector:
     def __init__(self, server, config):
+        self.config = config
+        self.server = server
+
         self.ws = None
         self.listener_thread = None
 
-        self.config = config
         self.language = config.get("language", "zh")
         if self.language not in LANGUAGE:
             server.logger.warning(LANGUAGE["en"]["language_not_found"].format(self.language))
             self.language = "en"
-        self.server = server
-
+        
         host = self.config.get("host")
         port = self.config.get("port")
         post_path = self.config.get("post_path")
         token = self.config.get("token")
-        self.headers = None
-
+        
         self.url = f"ws://{host}:{port}"
-
         if post_path:
             self.url += f"/{post_path}"
+
+        self.headers = None
         if token:
             self.headers = {
                 "Authorization": f"Bearer {token}"
             } 
 
-        self.bot = bot(self.send_message)
+        self.bot = bot(self.send_message, max_wait_time=self.config.get("max_wait_time", 10))
 
     def connect(self):
         self.server.logger.info(LANGUAGE[self.language]["try_connect"].format(self.url))

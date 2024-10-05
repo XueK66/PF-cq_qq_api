@@ -56,13 +56,15 @@ bot.send_group_msg(group_id, message)
 > | post_path | "" | 对应数据上报的终点名 |
 > | token | "" | 对应数据上报的token，用于加密信息 |
 > | language | "zh" | 语言包[zh/en] |
+> | max_wait_time | 10 | 最长等待QQAPI的时间（秒） |
 ```
 {
     "host": "127.0.0.1",
     "port": 8080,
     "post_path": "",
     "token": "",
-    "language": "zh"
+    "language": "zh",
+    "max_wait_time": 10
 }
 ```
 
