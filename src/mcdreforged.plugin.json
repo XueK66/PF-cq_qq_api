@@ -1,6 +1,6 @@
 {
 	"id": "cq_qq_api",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"name": "cq_qq_api",
 	"description": {
 		"en_us": "Websocket application to process information from QQ",
