@@ -8,12 +8,22 @@ DEFAULT_CONFIG = {
 }
 
 DEFAULT_TRANSLATION = {
-    "host": ["host", "IP地址"],
-    "port": ["port", "正向 Websocket 端口号"],
-    "post_path": ["Endpoint", "host:port/Endpoint (一般不用动)"],
-    "token": ["token", "QQ 的加密 token"],
-    "language": ["language", ""],
-    "max_wait_time": ["API 最长等待时间", "单位（秒）"]
+    "zh": {
+        "host": ["host", "IP地址"],
+        "port": ["port", "正向 Websocket 端口号"],
+        "post_path": ["Endpoint", "host:port/Endpoint (一般不用动)"],
+        "token": ["token", "QQ 的加密 token"],
+        "language": ["language", ""],
+        "max_wait_time": ["API 最长等待时间", "单位（秒）"]
+    },
+    "en": {
+        "host": ["host", "IP address"],
+        "port": ["port", "Websocket port"],
+        "post_path": ["Endpoint", "host:port/Endpoint"],
+        "token": ["token", "QQ token"],
+        "language": ["language", ""],
+        "max_wait_time": ["API maximum wait time", "/second"]
+    }
 }
 
 LANGUAGE = {
