@@ -6,7 +6,9 @@ connector = None
 
 def on_load(server: PluginServerInterface, old_module):
     # 加载配置文件
-    config = server.load_config_simple("config.yml", DEFAULT_CONFIG)
+    config = server.load_config_simple("config.json", DEFAULT_CONFIG)
+    _ = server.load_config_simple("config_note.json", DEFAULT_TRANSLATION)
+    move_data(server)
 
     global connector
     connector = QQWebSocketConnector(server, config)
@@ -21,3 +23,12 @@ def on_unload(server: PluginServerInterface):
 def get_bot():
     if connector:
         return connector.bot
+    
+def move_data(server):
+    import os
+    if os.path.exists("./config/cq_qq_api/config.yml"):
+        old_config = server.load_config_simple("config.yml", DEFAULT_CONFIG)
+        config = old_config
+        server.save_config_simple(config)
+        os.remove("./config/cq_qq_api/config.yml")
+    
