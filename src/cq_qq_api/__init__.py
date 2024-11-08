@@ -7,7 +7,7 @@ connector = None
 def on_load(server: PluginServerInterface, old_module):
     # 加载配置文件
     config = server.load_config_simple("config.json", DEFAULT_CONFIG)
-    _ = server.load_config_simple("config_note.json", DEFAULT_TRANSLATION)
+    _ = server.load_config_simple("config_lang.json", DEFAULT_TRANSLATION)
     move_data(server)
 
     global connector
