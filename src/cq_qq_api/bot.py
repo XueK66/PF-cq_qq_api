@@ -264,7 +264,7 @@ class bot:
         self.send_message(command_request)
 
     # 处理加群请求／邀请
-    def set_friend_add_request(self, flag, sub_type, approve=True, reason=""):
+    def set_group_add_request(self, flag, sub_type, approve=True, reason=""):
         params = {
             "flag": flag,
             "approve": approve,
@@ -272,7 +272,7 @@ class bot:
         }
         if not approve:
             params["reason"] = reason
-        command_request = self.format_request("set_friend_add_request", params)
+        command_request = self.format_request("set_group_add_request", params)
         self.send_message(command_request)
 
     # 获取群信息
