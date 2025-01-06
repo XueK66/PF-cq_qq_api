@@ -1,10 +1,13 @@
 import json
+import logging
 import threading
 import websocket
 
 from .bot import bot
 from .constant import LANGUAGE
 from .info import QQInfo
+
+logging.getLogger("websocket").setLevel(logging.WARNING)
 
 class QQWebSocketConnector:
     def __init__(self, server, config):
