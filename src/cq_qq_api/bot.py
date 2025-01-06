@@ -1,6 +1,7 @@
 #=====================================================================#
-import uuid
+import asyncio
 import time
+import uuid
 #=====================================================================#
 class bot:
     # Websocket 请求格式
@@ -27,7 +28,7 @@ class bot:
             "echo": params.get("echo", "")
         }
     
-    def wait_and_return_function_result(self, function_return_id):
+    async def wait_and_return_function_result(self, function_return_id):
         start_time = time.time()
         while True:
             if function_return_id in self.function_return:
@@ -35,7 +36,7 @@ class bot:
                 del self.function_return[function_return_id]
                 return result
                 
-            time.sleep(0.2)
+            await asyncio.sleep(0.2)
 
             # exceed max_wait_time -> return None
             if time.time() - start_time >= self.max_wait_time:
@@ -43,13 +44,13 @@ class bot:
 #=====================================================================#
 # Account
     # 获取登录号信息
-    def get_login_info(self):
+    async def get_login_info(self):
         function_return_id = str(uuid.uuid4())
         params = {"echo": function_return_id}
         command_request = self.format_request("get_login_info", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 设置登录号资料
     def set_qq_profile(self, **kargs):
@@ -60,32 +61,32 @@ class bot:
 #=====================================================================#
 # friend information
     # 获取陌生人信息
-    def get_stranger_info(self, user_id):
+    async def get_stranger_info(self, user_id):
         function_return_id = str(uuid.uuid4())
         params = {"user_id": int(user_id),
                   "echo": function_return_id}
         command_request = self.format_request("get_stranger_info", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取好友列表
-    def get_friend_list(self):
+    async def get_friend_list(self):
         function_return_id = str(uuid.uuid4())
         params = {"echo": function_return_id}
         command_request = self.format_request("get_friend_list", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取单向好友列表
-    def get_unidirectional_friend_list(self):
+    async def get_unidirectional_friend_list(self):
         function_return_id = str(uuid.uuid4())
         params = {"echo": function_return_id}
         command_request = self.format_request("get_unidirectional_friend_list", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
 #=====================================================================#
 # friend operation
@@ -144,14 +145,14 @@ class bot:
         self.send_message(command_request)
 
     # 获取消息
-    def get_msg(self, message_id):
+    async def get_msg(self, message_id):
         function_return_id = str(uuid.uuid4())
         params = {"echo": function_return_id,
                   "message_id": message_id}
         command_request = self.format_request("get_msg", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 撤回消息
     def delete_msg(self, message_id):
@@ -160,14 +161,14 @@ class bot:
         self.send_message(command_request)
 
     # 获取合并转发内容
-    def get_forward_msg(self, message_id):
+    async def get_forward_msg(self, message_id):
         function_return_id = str(uuid.uuid4())
         params = {"echo": function_return_id,
                   "message_id": message_id}
         command_request = self.format_request("get_forward_msg", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 发送合并转发 ( 群聊 )
     def send_group_forward_msg(self, group_id, message):
@@ -188,7 +189,7 @@ class bot:
         self.send_message(command_request)
 
     # 获取群消息历史记录
-    def get_group_msg_history(self, message_seq, group_id):
+    async def get_group_msg_history(self, message_seq, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "message_seq": message_seq,
@@ -198,12 +199,12 @@ class bot:
         command_request = self.format_request("get_group_msg_history", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
 #=====================================================================#
 # image
     # 获取图片信息
-    def get_image(self, file):
+    async def get_image(self, file):
         function_return_id = str(uuid.uuid4())
         params = {
             "file": file,
@@ -212,10 +213,10 @@ class bot:
         command_request = self.format_request("get_image", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 检查是否可以发送图片
-    def can_send_image(self):
+    async def can_send_image(self):
         function_return_id = str(uuid.uuid4())
         params = {
             "echo": function_return_id
@@ -223,12 +224,12 @@ class bot:
         command_request = self.format_request("can_send_image", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
 #=====================================================================#
 # audio
     # 获取语音
-    def get_record(self, file, out_format):
+    async def get_record(self, file, out_format):
         function_return_id = str(uuid.uuid4())
         params = {
             "file": file,
@@ -238,10 +239,10 @@ class bot:
         command_request = self.format_request("get_record", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 检查是否可以发送语音
-    def can_send_record(self):
+    async def can_send_record(self):
         function_return_id = str(uuid.uuid4())
         params = {
             "echo": function_return_id
@@ -249,7 +250,7 @@ class bot:
         command_request = self.format_request("can_send_record", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 #=====================================================================#
 # process
     # 处理加好友请求
@@ -264,7 +265,7 @@ class bot:
         self.send_message(command_request)
 
     # 处理加群请求／邀请
-    def set_group_add_request(self, flag, sub_type, approve=True, reason=""):
+    async def set_group_add_request(self, flag, sub_type, approve=True, reason=""):
         params = {
             "flag": flag,
             "approve": approve,
@@ -276,7 +277,7 @@ class bot:
         self.send_message(command_request)
 
     # 获取群信息
-    def get_group_info(self, group_id):
+    async def get_group_info(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -285,10 +286,10 @@ class bot:
         command_request = self.format_request("get_group_info", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群列表
-    def get_group_list(self):
+    async def get_group_list(self):
         function_return_id = str(uuid.uuid4())
         params = {
             "echo": function_return_id
@@ -296,10 +297,10 @@ class bot:
         command_request = self.format_request("get_group_list", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群成员信息
-    def get_group_member_info(self, group_id, user_id):
+    async def get_group_member_info(self, group_id, user_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -309,10 +310,10 @@ class bot:
         command_request = self.format_request("get_group_member_info", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群成员列表
-    def get_group_member_list(self, group_id):
+    async def get_group_member_list(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -321,10 +322,10 @@ class bot:
         command_request = self.format_request("get_group_member_list", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群荣誉信息
-    def get_group_honor_info(self, group_id):
+    async def get_group_honor_info(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -333,10 +334,10 @@ class bot:
         command_request = self.format_request("get_group_honor_info", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群系统消息
-    def get_group_system_msg(self):
+    async def get_group_system_msg(self):
         function_return_id = str(uuid.uuid4())
         params = {
             "echo": function_return_id
@@ -344,10 +345,10 @@ class bot:
         command_request = self.format_request("get_group_system_msg", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
     
     # 获取精华消息列表
-    def get_essence_msg_list(self, group_id):
+    async def get_essence_msg_list(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -356,10 +357,10 @@ class bot:
         command_request = self.format_request("get_essence_msg_list", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
     
     # 获取群 @全体成员 剩余次数
-    def get_group_at_all_remain(self, group_id):
+    async def get_group_at_all_remain(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -368,7 +369,7 @@ class bot:
         command_request = self.format_request("get_group_at_all_remain", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 #=====================================================================#
 # group setting
     # 设置群名
@@ -497,7 +498,7 @@ class bot:
         self.send_message(command_request)
 
     # 获取群公告
-    def _get_group_notice(self, group_id):
+    async def _get_group_notice(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -506,7 +507,7 @@ class bot:
         command_request = self.format_request("_get_group_notice", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 群组踢人
     def set_group_kick(self, group_id, user_id, reject_add_request=False):
@@ -570,7 +571,7 @@ class bot:
 
 
     # 获取群文件系统信息
-    def get_group_file_system_info(self, group_id):
+    async def get_group_file_system_info(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -579,10 +580,10 @@ class bot:
         command_request = self.format_request("get_group_file_system_info", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群根目录文件列表
-    def get_group_root_files(self, group_id):
+    async def get_group_root_files(self, group_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -591,10 +592,10 @@ class bot:
         command_request = self.format_request("get_group_root_files", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群子目录文件列表
-    def get_group_files_by_folder(self, group_id, folder_id):
+    async def get_group_files_by_folder(self, group_id, folder_id):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -604,10 +605,10 @@ class bot:
         command_request = self.format_request("get_group_files_by_folder", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 获取群文件资源链接
-    def get_group_file_url(self, group_id, file_id, busid):
+    async def get_group_file_url(self, group_id, file_id, busid):
         function_return_id = str(uuid.uuid4())
         params = {
             "group_id": int(group_id),
@@ -618,7 +619,7 @@ class bot:
         command_request = self.format_request("get_group_file_url", params)
         self.send_message(command_request)
 
-        return self.wait_and_return_function_result(function_return_id)
+        return await self.wait_and_return_function_result(function_return_id)
 
     # 上传私聊文件
     def upload_private_file(self, user_id, file, name):
