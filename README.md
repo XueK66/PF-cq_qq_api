@@ -31,6 +31,11 @@
 基本功能：聊天互相转发
 
 ## 使用方式
+
+### 与机器人连接
+
+参考文档：[PF系列插件官方文档 - CQ-QQ-API - 机器人食用指南](https://docs.qq.com/aio/p/sct29j7ammzw142?p=MgrkYFk9OPpK8wZEY8IeBU)
+
 #### 调用机器人
 ```
 bot = server.get_plugin_instance("cq_qq_api").get_bot()
