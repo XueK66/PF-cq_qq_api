@@ -21,8 +21,7 @@ def on_unload(server: PluginServerInterface):
         server.logger.info(LANGUAGE[connector.language]["close_success"])
 
 def get_bot():
-    if connector:
-        return connector.bot
+    return connector.bot if connector else None
     
 def move_data(server):
     import os

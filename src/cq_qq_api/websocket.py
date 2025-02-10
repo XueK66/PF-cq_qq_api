@@ -31,46 +31,31 @@ class QQWebSocketConnector:
         if post_path:
             self.url += f"/{post_path}"
 
-        self.headers = None
-        if token:
-            self.headers = {
-                "Authorization": f"Bearer {token}"
-            } 
+        self.headers = {"Authorization": f"Bearer {token}"} if token else None
 
         self.bot = bot(self.send_message, max_wait_time=self.config.get("max_wait_time", 10))
 
     def connect(self):
         self.server.logger.info(LANGUAGE[self.language]["try_connect"].format(self.url))
-        if self.headers:
-            self.ws = websocket.WebSocketApp(
-                self.url,
-                header=self.headers,
-                on_message=self.on_message,
-                on_error=self.on_error,
-                on_close=self.on_close
-            )
-        else:
-            self.ws = websocket.WebSocketApp(
-                self.url,
-                on_message=self.on_message,
-                on_error=self.on_error,
-                on_close=self.on_close
-            )
+        self.ws = websocket.WebSocketApp(
+            self.url,
+            header=self.headers,
+            on_message=self.on_message,
+            on_error=self.on_error,
+            on_close=self.on_close
+        )
 
-        # 创建并启动监听线程
         self.listener_thread = threading.Thread(target=self.ws.run_forever, kwargs={'reconnect': 5})
         self.listener_thread.start()
 
         self.server.logger.info(LANGUAGE[self.language]["start_connect"])
 
-
     def on_message(self, ws, message):
-        # 处理接收到的消息
         self.server.logger.debug(LANGUAGE[self.language]["received_message"].format(message))
 
         message = json.loads(message)
 
-        if message.get("echo", ""):
+        if "echo" in message:
             self.bot.function_return[message["echo"]] = message
             return
 
@@ -86,7 +71,6 @@ class QQWebSocketConnector:
     def send_message(self, message):
         if self.ws and self.ws.sock and self.ws.sock.connected:
             self.ws.send(json.dumps(message))
-
             self.server.logger.debug(LANGUAGE[self.language]["send_message"].format(message))
         else:
             self.server.logger.warning(LANGUAGE[self.language]["retry_connect"])

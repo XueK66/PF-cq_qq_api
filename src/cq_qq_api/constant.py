@@ -4,7 +4,7 @@ DEFAULT_CONFIG = {
     "post_path": "",
     "token": "",
     "language": "zh",
-    "max_wait_time": 10
+    "max_wait_time": 5
 }
 
 DEFAULT_TRANSLATION = {
