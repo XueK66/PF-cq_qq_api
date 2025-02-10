@@ -13,27 +13,29 @@ class QQWebSocketConnector:
     def __init__(self, server, config):
         self.config = config
         self.server = server
-
         self.ws = None
         self.listener_thread = None
-
         self.language = config.get("language", "zh")
+        
         if self.language not in LANGUAGE:
             server.logger.warning(LANGUAGE["en"]["language_not_found"].format(self.language))
             self.language = "en"
         
-        host = self.config.get("host")
-        port = self.config.get("port")
-        post_path = self.config.get("post_path")
-        token = self.config.get("token")
-        
-        self.url = f"ws://{host}:{port}"
-        if post_path:
-            self.url += f"/{post_path}"
-
+        self.url = self._build_url(config)
+        token = config.get("token")
         self.headers = {"Authorization": f"Bearer {token}"} if token else None
 
-        self.bot = bot(self.send_message, max_wait_time=self.config.get("max_wait_time", 10))
+        self.bot = bot(self.send_message, max_wait_time=self._get_max_wait_time(config))
+
+    def _build_url(self, config):
+        host = config.get("host")
+        port = config.get("port")
+        post_path = config.get("post_path")
+        url = f"ws://{host}:{port}"
+        if post_path:
+            url += f"/{post_path}"
+
+        return url
 
     def connect(self):
         self.server.logger.info(LANGUAGE[self.language]["try_connect"].format(self.url))
@@ -47,19 +49,16 @@ class QQWebSocketConnector:
 
         self.listener_thread = threading.Thread(target=self.ws.run_forever, kwargs={'reconnect': 5})
         self.listener_thread.start()
-
         self.server.logger.info(LANGUAGE[self.language]["start_connect"])
 
     def on_message(self, ws, message):
         self.server.logger.debug(LANGUAGE[self.language]["received_message"].format(message))
-
         message = json.loads(message)
 
         if "echo" in message:
             self.bot.function_return[message["echo"]] = message
-            return
-
-        QQInfo(message, self.server, self.bot)
+        else:
+            QQInfo(message, self.server, self.bot)
 
     def on_error(self, ws, error):
         self.server.logger.error(LANGUAGE[self.language]["error_connect"].format(error))
