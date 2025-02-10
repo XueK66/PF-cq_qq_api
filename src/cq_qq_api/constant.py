@@ -4,7 +4,7 @@ DEFAULT_CONFIG = {
     "post_path": "",
     "token": "",
     "language": "zh",
-    "max_wait_time": 10
+    "max_wait_time": 5
 }
 
 DEFAULT_TRANSLATION = {
@@ -34,6 +34,7 @@ LANGUAGE = {
         "error_connect": "cq_qq_api 错误: {}",
         "error_close": "关闭 cq_qq_api 时出错: {}",
         "language_not_found": "未找到语言包: {}",
+        "max_wait_time_exceed": "API 等待时间超过 {} 秒，改为 9 秒。",
         "received_message": "收到消息: {}",
         "retry_connect": "尝试发送消息，但连接尚未建立，正在重试",
         "send_message": "发送消息到 QQ\n{}",
@@ -47,6 +48,7 @@ LANGUAGE = {
         "error_connect": "cq_qq_api error: {}",
         "error_close": "Got error when closing cq_qq_api: {}",
         "language_not_found": "Language pack not found: {}",
+        "max_wait_time_exceed": "API maximum wait time exceed {} seconds, changed to 9 seconds.",
         "received_message": "Received message: {}",
         "retry_connect": "Try to send message, but the connection is not established, retrying",
         "send_message": "Send message to QQ\n{}",

@@ -7,7 +7,6 @@ connector = None
 def on_load(server: PluginServerInterface, old_module):
     # 加载配置文件
     config = server.load_config_simple("config.json", DEFAULT_CONFIG)
-    _ = server.load_config_simple("config_lang.json", DEFAULT_TRANSLATION)
     move_data(server)
 
     global connector
@@ -21,14 +20,13 @@ def on_unload(server: PluginServerInterface):
         server.logger.info(LANGUAGE[connector.language]["close_success"])
 
 def get_bot():
-    if connector:
-        return connector.bot
+    return connector.bot if connector else None
     
 def move_data(server):
     import os
-    if os.path.exists("./config/cq_qq_api/config.yml"):
+    old_config_path = "./config/cq_qq_api/config.yml"
+    if os.path.exists(old_config_path):
         old_config = server.load_config_simple("config.yml", DEFAULT_CONFIG)
-        config = old_config
-        server.save_config_simple(config)
-        os.remove("./config/cq_qq_api/config.yml")
+        server.save_config_simple(old_config)
+        os.remove(old_config_path)
     

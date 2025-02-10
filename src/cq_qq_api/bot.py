@@ -52,6 +52,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_login_info_sync(self):
+        return asyncio.run(self.get_login_info())
+
     # 设置登录号资料
     def set_qq_profile(self, **kargs):
         if kargs:                                                      # 不为空才发送
@@ -70,6 +73,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_stranger_info_sync(self, user_id):
+        return asyncio.run(self.get_stranger_info(user_id))
+
     # 获取好友列表
     async def get_friend_list(self):
         function_return_id = str(uuid.uuid4())
@@ -79,6 +85,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_friend_list_sync(self):
+        return asyncio.run(self.get_friend_list())
+
     # 获取单向好友列表
     async def get_unidirectional_friend_list(self):
         function_return_id = str(uuid.uuid4())
@@ -87,6 +96,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_unidirectional_friend_list_sync(self):
+        return asyncio.run(self.get_unidirectional_friend_list())
 
 #=====================================================================#
 # friend operation
@@ -154,6 +166,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_msg_sync(self, message_id):
+        return asyncio.run(self.get_msg(message_id))
+
     # 撤回消息
     def delete_msg(self, message_id):
         params = {"message_id": message_id}
@@ -169,6 +184,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_forward_msg_sync(self, message_id):
+        return asyncio.run(self.get_forward_msg(message_id))
 
     # 发送合并转发 ( 群聊 )
     def send_group_forward_msg(self, group_id, message):
@@ -201,6 +219,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_group_msg_history_sync(self, message_seq, group_id):
+        return asyncio.run(self.get_group_msg_history(message_seq, group_id))
+
 #=====================================================================#
 # image
     # 获取图片信息
@@ -215,6 +236,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_image_sync(self, file):
+        return asyncio.run(self.get_image(file))
+
     # 检查是否可以发送图片
     async def can_send_image(self):
         function_return_id = str(uuid.uuid4())
@@ -225,6 +249,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def can_send_image_sync(self):
+        return asyncio.run(self.can_send_image())
 
 #=====================================================================#
 # audio
@@ -241,6 +268,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_record_sync(self, file, out_format):
+        return asyncio.run(self.get_record(file, out_format))
+
     # 检查是否可以发送语音
     async def can_send_record(self):
         function_return_id = str(uuid.uuid4())
@@ -251,6 +281,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def can_send_record_sync(self):
+        return asyncio.run(self.can_send_record())
 #=====================================================================#
 # process
     # 处理加好友请求
@@ -276,6 +309,9 @@ class bot:
         command_request = self.format_request("set_group_add_request", params)
         self.send_message(command_request)
 
+    def set_group_add_request_sync(self, flag, sub_type, approve=True, reason=""):
+        return asyncio.run(self.set_group_add_request(flag, sub_type, approve, reason))
+
     # 获取群信息
     async def get_group_info(self, group_id):
         function_return_id = str(uuid.uuid4())
@@ -288,6 +324,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_group_info_sync(self, group_id):
+        return asyncio.run(self.get_group_info(group_id))
+
     # 获取群列表
     async def get_group_list(self):
         function_return_id = str(uuid.uuid4())
@@ -298,6 +337,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_group_list_sync(self):
+        return asyncio.run(self.get_group_list())
 
     # 获取群成员信息
     async def get_group_member_info(self, group_id, user_id):
@@ -312,6 +354,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_group_member_info_sync(self, group_id, user_id):
+        return asyncio.run(self.get_group_member_info(group_id, user_id))
+
     # 获取群成员列表
     async def get_group_member_list(self, group_id):
         function_return_id = str(uuid.uuid4())
@@ -323,6 +368,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_group_member_list_sync(self, group_id):
+        return asyncio.run(self.get_group_member_list(group_id))
 
     # 获取群荣誉信息
     async def get_group_honor_info(self, group_id):
@@ -336,6 +384,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_group_honor_info_sync(self, group_id):
+        return asyncio.run(self.get_group_honor_info(group_id))
+
     # 获取群系统消息
     async def get_group_system_msg(self):
         function_return_id = str(uuid.uuid4())
@@ -346,6 +397,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_group_system_msg_sync(self):
+        return asyncio.run(self.get_group_system_msg())
     
     # 获取精华消息列表
     async def get_essence_msg_list(self, group_id):
@@ -358,6 +412,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_essence_msg_list_sync(self, group_id):
+        return asyncio.run(self.get_essence_msg_list(group_id))
     
     # 获取群 @全体成员 剩余次数
     async def get_group_at_all_remain(self, group_id):
@@ -370,6 +427,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_group_at_all_remain_sync(self, group_id):
+        return asyncio.run(self.get_group_at_all_remain(group_id))
 #=====================================================================#
 # group setting
     # 设置群名
@@ -509,6 +569,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def _get_group_notice_sync(self, group_id):
+        return asyncio.run(self._get_group_notice(group_id))
+
     # 群组踢人
     def set_group_kick(self, group_id, user_id, reject_add_request=False):
         params = {
@@ -582,6 +645,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_group_file_system_info_sync(self, group_id):
+        return asyncio.run(self.get_group_file_system_info(group_id))
+
     # 获取群根目录文件列表
     async def get_group_root_files(self, group_id):
         function_return_id = str(uuid.uuid4())
@@ -593,6 +659,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_group_root_files_sync(self, group_id):
+        return asyncio.run(self.get_group_root_files(group_id))
 
     # 获取群子目录文件列表
     async def get_group_files_by_folder(self, group_id, folder_id):
@@ -607,6 +676,9 @@ class bot:
 
         return await self.wait_and_return_function_result(function_return_id)
 
+    def get_group_files_by_folder_sync(self, group_id, folder_id):
+        return asyncio.run(self.get_group_files_by_folder(group_id, folder_id))
+
     # 获取群文件资源链接
     async def get_group_file_url(self, group_id, file_id, busid):
         function_return_id = str(uuid.uuid4())
@@ -620,6 +692,9 @@ class bot:
         self.send_message(command_request)
 
         return await self.wait_and_return_function_result(function_return_id)
+
+    def get_group_file_url_sync(self, group_id, file_id, busid):
+        return asyncio.run(self.get_group_file_url(group_id, file_id, busid))
 
     # 上传私聊文件
     def upload_private_file(self, user_id, file, name):

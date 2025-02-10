@@ -5,11 +5,7 @@ import json
 from mcdreforged.api.event import LiteralEvent
 #=====================================================================#
 class QQInfo:
-    PROCESS_POST_TYPE = [
-        "message",
-        "request", 
-        "notice"
-    ]
+    PROCESS_POST_TYPE = {"message", "request", "notice"}
 
     def __init__(self, message, server, bot):
         message = message if isinstance(message, dict) else json.loads(message) 
@@ -17,7 +13,6 @@ class QQInfo:
         self.server = server
         self.bot = bot
 
-        # common info for all post
         self.time = message.get("time")
         self.self_id = message.get("self_id")
         self.post_type = message.get("post_type")
@@ -25,37 +20,38 @@ class QQInfo:
         if self.post_type not in self.PROCESS_POST_TYPE:
             return
         
-        if self.post_type == "message":
-            self.__process_message(message)
-        elif self.post_type == "request":
-            self.__process_request(message)
-        elif self.post_type == "notice":
-            self.__process_notice(message)
+        process_method = getattr(self, f"_process_{self.post_type}", None)
+        if process_method:
+            process_method(message)
 #=====================================================================#
-    def __process_content(self):
+    def _process_content(self):
         content = self.raw_message
-        content = re.sub(r'\[CQ:face,id=.*?\]', '[表情]', content)
-        content = re.sub(r'\[CQ:image,file=.*?\]', '[图片]', content)
-        content = re.sub(r'\[CQ:record,file=.*?\]', '[语音]', content)
-        content = re.sub(r'\[CQ:video,file=.*?\]', '[视频]', content)
-        content = re.sub(r'\[CQ:rps\]', '[猜拳]', content)
-        content = re.sub(r'\[CQ:dice\]', '[掷骰子]', content)
-        content = re.sub(r'\[CQ:shake\]', '[窗口抖动]', content)
-        content = re.sub(r'\[CQ:poke,.*?\]', "[戳一戳]", content)
-        content = re.sub(r'\[CQ:anonymous.*?\]', "[匿名消息]", content)
-        content = re.sub(r'\[CQ:share,file=.*?\]', '[链接]', content)
-        content = re.sub(r'\[CQ:contact,type=qq.*?\]', "[推荐好友]", content)
-        content = re.sub(r'\[CQ:contact,type=group.*?\]', "[推荐群]", content)
-        content = re.sub(r'\[CQ:location,.*?\]', "[推荐群]", content)
-        content = re.sub(r'\[CQ:music,type=.*?\]', '[音乐]', content)
-        content = re.sub(r'\[CQ:forward,id=.*?\]', '[转发消息]', content)
-        content = re.sub(r'\[CQ:file(?:,.*?)*\]', '[文件]', content)
-        content = re.sub(r'\[CQ:redbag,title=.*?\]', '[红包]', content)
-        content = re.sub(r'\[CQ:mface,.*?\]', '[表情]', content)
-        content = content.replace('CQ:at,qq=', '@')
-        self.content = content
+        replacements = {
+            r'\[CQ:face,id=.*?\]': '[表情]',
+            r'\[CQ:image,file=.*?\]': '[图片]',
+            r'\[CQ:record,file=.*?\]': '[语音]',
+            r'\[CQ:video,file=.*?\]': '[视频]',
+            r'\[CQ:rps\]': '[猜拳]',
+            r'\[CQ:dice\]': '[掷骰子]',
+            r'\[CQ:shake\]': '[窗口抖动]',
+            r'\[CQ:poke,.*?\]': '[戳一戳]',
+            r'\[CQ:anonymous.*?\]': '[匿名消息]',
+            r'\[CQ:share,file=.*?\]': '[链接]',
+            r'\[CQ:contact,type=qq.*?\]': '[推荐好友]',
+            r'\[CQ:contact,type=group.*?\]': '[推荐群]',
+            r'\[CQ:location,.*?\]': '[推荐群]',
+            r'\[CQ:music,type=.*?\]': '[音乐]',
+            r'\[CQ:forward,id=.*?\]': '[转发消息]',
+            r'\[CQ:file(?:,.*?)*\]': '[文件]',
+            r'\[CQ:redbag,title=.*?\]': '[红包]',
+            r'\[CQ:mface,.*?\]': '[表情]',
+            'CQ:at,qq=': '@'
+        }
+        for pattern, replacement in replacements.items():
+            content = re.sub(pattern, replacement, content)
+            self.content = content
 
-    def __process_message(self, message):
+    def _process_message(self, message):
         self.message_type = message.get("message_type")
         self.sub_type     = message.get("sub_type")
         self.message_id   = message.get("message_id")
@@ -69,24 +65,14 @@ class QQInfo:
             self.sender_nickname  = self.sender.get("nickname")
             self.sender_card      = self.sender.get("card")
 
-        self.__process_content()
+        self._process_content()
 
-        if self.message_type == 'private':
-            self.source_id = self.user_id
-        elif self.message_type == 'group':
-            self.source_id = message.get("group_id")
+        self.source_id = self.user_id if self.message_type == 'private' else message.get("group_id")
 
-        self.server.dispatch_event(
-            LiteralEvent("cq_qq_api.on_qq_command"),
-            (self, self.bot)
-        )
+        self.server.dispatch_event(LiteralEvent("cq_qq_api.on_qq_command"), (self, self.bot))
+        self.server.dispatch_event(LiteralEvent("cq_qq_api.on_qq_message"), (self, self.bot))
 
-        self.server.dispatch_event(
-            LiteralEvent("cq_qq_api.on_qq_message"),
-            (self, self.bot)
-        )
-
-    def __process_request(self, message):
+    def _process_request(self, message):
         self.request_type = message.get("request_type")
         self.user_id = message.get("user_id")              # 发送请求的 QQ 号
         self.flag = message.get("flag")
@@ -103,7 +89,7 @@ class QQInfo:
             (self, self.bot)
         )
 
-    def __process_notice(self, message):
+    def _process_notice(self, message):
         self.notice_type = message.get("notice_type")
         
         if self.notice_type == "friend_recall":            # 私聊消息撤回
