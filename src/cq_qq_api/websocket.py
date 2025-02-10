@@ -27,6 +27,13 @@ class QQWebSocketConnector:
 
         self.bot = bot(self.send_message, max_wait_time=self._get_max_wait_time(config))
 
+    def _get_max_wait_time(self, config):
+        max_wait_time = config.get("max_wait_time", 5)
+        if max_wait_time >= 10:
+            self.server.logger.warning(LANGUAGE[self.language]["max_wait_time_warning"])
+            return 9
+        return max_wait_time
+
     def _build_url(self, config):
         host = config.get("host")
         port = config.get("port")
