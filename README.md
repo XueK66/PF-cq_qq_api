@@ -20,7 +20,7 @@
 使用方式：
 * 将Release里面的cq_qq_api.mcdr放入`/plugins`
 * 加载后，在`/config/cq_qq_api/config.yml`中配置机器人
-* 与机器人连接请参考文档：[PF系列插件官方文档 - CQ-QQ-API - 机器人食用指南](https://docs.qq.com/aio/p/sct29j7ammzw142?p=MgrkYFk9OPpK8wZEY8IeBU)
+* 与机器人连接请参考文档：[PF系列插件官方文档 - CQ-QQ-API - 机器人食用指南](https://pf-doc.pfingan.com/main.html?path=PF-cq-api%2F%E6%9C%BA%E5%99%A8%E4%BA%BA%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97%2FREADME.md)
 
 ## 依赖
 #### Python
