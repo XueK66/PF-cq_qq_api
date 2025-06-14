@@ -40,6 +40,7 @@ LANGUAGE = {
         "send_message": "发送消息到 QQ\n{}",
         "start_connect": "~~ 开始连接 ~~",
         "try_connect": "服务器准备链接 {}",
+        "connect_success": "~~ 连接成功 ~~",
     },
     "en":{
         "close_success": "~~ cq_qq_api server is closed ~~",
@@ -54,5 +55,6 @@ LANGUAGE = {
         "send_message": "Send message to QQ\n{}",
         "start_connect": "~~ Start connection ~~",
         "try_connect": "Server is ready to connect {}",
+        "connect_success": "~~ Connection successful ~~",
     }
 }

@@ -44,6 +44,9 @@ class QQWebSocketConnector:
 
         return url
 
+    def on_open(self, ws):
+        self.server.logger.info(LANGUAGE[self.language]["connect_success"])
+
     def connect(self):
         self.server.logger.info(LANGUAGE[self.language]["try_connect"].format(self.url))
         self.ws = websocket.WebSocketApp(
@@ -51,7 +54,8 @@ class QQWebSocketConnector:
             header=self.headers,
             on_message=self.on_message,
             on_error=self.on_error,
-            on_close=self.on_close
+            on_close=self.on_close,
+            on_open=self.on_open
         )
 
         self.listener_thread = threading.Thread(target=self.ws.run_forever, kwargs={'reconnect': 5})
