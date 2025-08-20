@@ -707,3 +707,16 @@ class bot:
         self.send_message(command_request)
 
 #=====================================================================#
+    # 获取机器人 QQ 范围
+    async def get_robot_uin_range(self):
+        function_return_id = str(uuid.uuid4())
+        params = {
+            "echo": function_return_id
+        }
+        command_request = self.format_request("get_robot_uin_range", params)
+        self.send_message(command_request)
+
+        return await self.wait_and_return_function_result(function_return_id)
+    
+    def get_robot_uin_range_sync(self):
+        return asyncio.run(self.get_robot_uin_range())
