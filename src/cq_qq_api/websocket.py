@@ -79,7 +79,7 @@ class QQWebSocketConnector:
         self.close()
 
     def send_message(self, message):
-        if self.ws and self.ws.sock and self.ws.sock.connected:
+        if self.is_connected():
             self.ws.send(json.dumps(message))
             self.server.logger.debug(LANGUAGE[self.language]["send_message"].format(message))
         else:
@@ -94,3 +94,6 @@ class QQWebSocketConnector:
             self.server.logger.info(LANGUAGE[self.language]["close_info"])
         except Exception as e:
             self.server.logger.warning(LANGUAGE[self.language]["error_close"].format(e))
+
+    def is_connected(self):
+        return self.ws and self.ws.sock and self.ws.sock.connected
