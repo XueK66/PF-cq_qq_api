@@ -23,6 +23,9 @@ def on_unload(server: PluginServerInterface):
 def get_bot():
     return connector.bot if connector else None
     
+def is_connected()->bool:
+    return connector.is_connected() if connector else False
+
 def move_data(server):
     import os
     if os.path.exists("./config/cq_qq_api/config.yml"):
